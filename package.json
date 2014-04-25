@@ -2,7 +2,15 @@
   "name": "node-car-scraper",
   "version": "0.0.1",
   "description": "scraper",
-  "author": "Jason Tarasovic <jason@tarasovic.com",
+  "author": {
+    "name": "Jason Tarasovic",
+    "email": "jason@tarasovic.com",
+    "url": "www.tarasovic.com"
+    },
+    "repository": {
+    "type": "git",
+    "url": "git://github.com/JTarasovic/node-car-scraper.git"
+  },
   "dependencies": {
     "request": "2.34.0",
     "cheerio": "0.15.0",
@@ -12,6 +20,7 @@
   },
   "private": true,
   "license": "GPLv2",
+  "main": "./node-car-scraper.js",
   "engines": {
   	"node": "0.10.26"
   }
