@@ -41,7 +41,7 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 		function _links (arr) {
 			var completed = 0;
 
-			var bar = new ProgressBar('  downloading [:bar] :percent :etas', arr.length);
+			var bar = new ProgressBar(' fetching cars: [:bar] :percent :etas', arr.length);
 			arr.forEach(function (link, index, array) {
 				request(link, _process);
 			});
