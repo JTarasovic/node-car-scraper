@@ -13,7 +13,6 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 			siteCB(err);
 			return;
 		}
-				
 		siteCB(null, cheerio.load(body), _additional);
 
 		function _additional (pages) {
@@ -56,9 +55,8 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 					return;
 				}
 
-				linkCB(null, cheerio.load(body), function (some) {
+				linkCB(null, cheerio.load(body), function () {
 					completed += 1;
-					console.log(some, '\t',completed);
 					if (completed >= arr.length) {
 						finalCB();
 					}
