@@ -1,11 +1,8 @@
 var cheerio = require('cheerio');
 var request = require('request');
-
+var ProgressBar = require('progress');
 
 function processSite (site, siteCB, pageCB, linkCB, finalCB) {
-
-
-
 	request(site, _site);
 
 	function _site (err, resp, body) {
@@ -44,6 +41,7 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 		function _links (arr) {
 			var completed = 0;
 
+			var bar = new ProgressBar('  downloading [:bar] :percent :etas', arr.length);
 			arr.forEach(function (link, index, array) {
 				request(link, _process);
 			});
@@ -57,6 +55,7 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 
 				linkCB(null, cheerio.load(body), function () {
 					completed += 1;
+					bar.tick();
 					if (completed >= arr.length) {
 						finalCB();
 					}
