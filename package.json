@@ -1,14 +1,13 @@
 {
   "name": "node-car-scraper",
+  "version": "0.0.1",
   "description": "scraper",
   "author": "Jason Tarasovic <jason@tarasovic.com",
   "dependencies": {
     "request": "2.34.0",
-    "redis": "0.10.1",
     "cheerio": "0.15.0",
     "tablesorter": "Mottie/tablesorter",
     "string": "1.8.1",
-    "async": "0.7.0",
     "progress": "1.1.5"
   },
   "private": true,
