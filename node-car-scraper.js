@@ -1,10 +1,15 @@
 var cheerio = require('cheerio');
 var request = require('request');
 var ProgressBar = require('progress');
+var debug = false;
 
 
 // exported function
 function processSite (site, siteCB, pageCB, linkCB, finalCB) {
+	if (process.env.NODE_ENV === 'debug') {
+		debug = true;
+	}
+	if (debug) {console.log('Main site:', site);}
 	request(site, _site);
 
 	// for the main site 
@@ -30,6 +35,7 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 			
 			// actually get each page
 			pages.forEach(function (page, index, array){
+				if (debug) {console.log('Page', index, ':', page);}
 				request(page, _page);
 				return;
 			});
@@ -46,10 +52,12 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 						return;
 					}
 					completed += 1;
+					if (debug) console.log('Page', completed, 'of', pages.length);
 					links = links.concat(arr);
 
 					// once we have all the links from the pages, start processing them
 					if (completed >= pages.length) {
+						if (debug) {console.log('Number of results:', links.length);}
 						_links(links);
 					}
 					return;
@@ -63,8 +71,11 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 		function _links (arr) {
 			var completed = 0;
 
-			var bar = new ProgressBar(' fetching cars: [:bar] :percent :etas', arr.length);
+			if (!debug) {
+				var bar = new ProgressBar(' fetching cars: [:bar] :percent :etas', arr.length);
+			}
 			arr.forEach(function (link, index, array) {
+				if (debug) {console.log('Link', index, ':', link);}
 				request(link, _process);
 				return;
 			});
@@ -78,7 +89,8 @@ function processSite (site, siteCB, pageCB, linkCB, finalCB) {
 				// allow the caller to process each individual page
 				linkCB(null, cheerio.load(body), function () {
 					completed += 1;
-					bar.tick();
+					if (debug) console.log('Link', completed, 'of', arr.length);
+					if (!debug) bar.tick();
 					if (completed >= arr.length) {
 						finalCB();
 						return;
